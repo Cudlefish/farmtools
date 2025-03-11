@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Farm Tool</title>
+</head>
+<body>
+    <h2>Add a New Farm Tool</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Tool Name" required>
+        <textarea name="description" placeholder="Description" required></textarea>
+        <button type="submit">Add Tool</button>
+    </form>
+</body>
+</html>

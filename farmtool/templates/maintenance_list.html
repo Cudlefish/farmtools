@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table headers */
+th {
+    background: #007BFF;
+    color: white;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+tr:hover {
+    background-color: #ddd;
+}
+
+
+a {
+    text-decoration: none;
+    color: #28a745;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #218838;
+}
+
+p a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 15px;
+    background: #007BFF;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+p a:hover {
+    background: #0056b3;
+}
+
+    </style>
+    <title>Maintenance Schedule</title>
+</head>
+<body>
+    <h2>Maintenance Schedule</h2>
+    <table border="1">
+        <tr>
+            <th>Tool</th>
+            <th>Scheduled Date</th>
+            <th>Status</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.tool.name }}</td>
+            <td>{{ schedule.scheduled_date }}</td>
+            <td>{{ schedule.status }}</td>
+            <td>{{ schedule.notes }}</td>
+            <td>
+                {% if schedule.status == "Pending" %}
+                <a href="{% url 'mark_completed' schedule.id %}">Mark as Completed</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="{% url 'tool_list' %}">Back to Tools</a></p>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ tool.name }}</title>
+</head>
+<body>
+    <h2>{{ tool.name }}</h2>
+    <p>{{ tool.description }}</p>
+    <p>Status: {% if tool.available %}Available{% else %}Not Available{% endif %}</p>
+    <a href="{% url 'tool_list' %}">Back to List</a>
+</body>
+</html>

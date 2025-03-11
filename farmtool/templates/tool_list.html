@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* farm_tools.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.9);
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+li:hover {
+    transform: scale(1.05);
+}
+
+a, button {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+a {
+    background: #007bff;
+    color: white;
+    border: none;
+}
+
+a:hover {
+    background: #0056b3;
+}
+
+button {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+button:hover {
+    background: #cc0000;
+}
+
+    </style>
+    <title>Farm Tools</title>
+</head>
+<body>
+    <h2>Tools & Equipment</h2>
+    <ul>
+        {% for tool in tools %}
+            <li>
+                {{ tool.name }} - {% if tool.available %} Available {% else %} Checked Out {% endif %}  
+                {% if tool.available %}
+                    <a href="{% url 'check_out_tool' tool.id %}">Check Out</a>
+                {% else %}
+                
+                        {% csrf_token %}
+                        <button type="submit">Check In</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <br><br><br><br>
+    <footer>
+        <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

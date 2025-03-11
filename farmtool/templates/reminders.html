@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upcoming Maintenance</title>
+</head>
+<body>
+    <h2>Upcoming Maintenance</h2>
+    <ul>
+        {% for schedule in upcoming %}
+            <li>{{ schedule.tool.name }} - {{ schedule.scheduled_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

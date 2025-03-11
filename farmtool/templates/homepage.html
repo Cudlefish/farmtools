@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            background-image: url();
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color:rgb(42, 11, 219);
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;}
+        
+       .navbar {
+          background-color: #1106ac;
+          color: #fff;
+          padding: 30px 0;
+        }
+
+       .navbar .logo {
+          font-size: 1.5rem;
+          margin: 0;
+          float: left;
+        }
+
+        .navbar nav {
+          float: right;
+        }
+        .nav-links {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+       .nav-links li {
+          display: inline-block;
+          margin-left: 20px;
+        }
+
+        .nav-links a {
+           color: #fff;
+           text-decoration: none;
+           font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .features {
+            padding: 50px 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            display: flex;
+            justify-content: space-around;
+        }
+
+
+        .feature {
+            max-width: 300px;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            color: #1106ac;
+        
+        }
+        .btn {
+            background-color: #1106ac;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+        <header class="navbar">
+            <div class="container">
+                <h1 class="logo">FarmTools & Equipment</h1><br>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="homepage1">Home</a></li>
+                        <li><a href="profile">Profile</a></li>
+                        <li><a href="tool_list">Tools & Equipment</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li><br><br>
+                        
+                    </ul>
+                </nav>
+            </div>
+    </header>
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="feature-list">
+                <div class="feature">
+                    <h3>Inventory Tracking</h3>
+                    <p>Keep track of all your farm tools and equipment in one place.</p>
+                </div>
+                <div class="feature">
+                    <h3>Maintenance Scheduling</h3>
+                    <p>Automate maintenance reminders to prevent unexpected breakdowns.</p>
+                </div>
+                <div class="feature">
+                    <h3>Tool Check-In/Check-Out</h3>
+                    <p>Log tool usage with ease and enhance accountability among workers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Have questions? Reach out to us for more information.</p>
+            <a href="mailto:support@farmtools.com" class="btn">Email Us</a>
+        </div>
+    </section>
+    <br><br><br><br>
+    <footer>
+        <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Maintenance</title>
+</head>
+<body>
+    <h2>Schedule Maintenance for {{ tool.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="scheduled_date">Scheduled Date:</label>
+        <input type="date" name="scheduled_date" required>
+        <br>
+        <label for="notes">Notes:</label>
+        <textarea name="notes" placeholder="Enter maintenance details"></textarea>
+        <br>
+        <button type="submit">Schedule Maintenance</button>
+    </form>
+    <p><a href="{% url 'maintenance_list' %}">Back to Maintenance List</a></p>
+</body>
+</html>
