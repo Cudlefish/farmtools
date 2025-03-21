@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
+from django.utils import timezone 
 from django.http import HttpResponse
 from .forms import LoginForm
 from .forms import SignupForm
@@ -12,7 +12,7 @@ from .models import FarmTool,ToolTransaction,MaintenanceSchedule
 def home(request):
     return render (request, 'homepage.html')
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -42,6 +42,7 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html',{'form': form})
+
 def homepage1(request):
     
     return render(request, 'homepage1.html')
@@ -50,14 +51,13 @@ def tool_list(request):
     tools = FarmTool.objects.all()
     return render(request, 'tool_list.html', {'tools': tools})
 
-
+@login_required
 def profile_page(request):
     return render(request, 'profile.html')
 
 def error(request):
     return render(request,'error.html')
 
-@login_required
     
 def add_tool(request):
      if request.method == 'POST':
@@ -72,7 +72,7 @@ def tool_detail(request, tool_id):
     tool = get_object_or_404(FarmTool, id=tool_id)
     return render(request, 'tool_details.html', {'tool': tool})
 
-@login_required
+
 def check_out_tool(request, tool_id):
     tool = get_object_or_404(FarmTool, id=tool_id)
     
@@ -89,7 +89,7 @@ def check_out_tool(request, tool_id):
     else:
         return render(request, 'error.html', {'message': 'Tool is currently not available'})
 
-@login_required
+
 def check_in_tool(request, transaction_id):
     transaction = get_object_or_404(ToolTransaction, id=transaction_id, user=request.user)
 
@@ -106,13 +106,13 @@ def check_in_tool(request, transaction_id):
     else:
         return render(request, 'error.html', {'message': 'Tool is already checked in'})
     
-@login_required
+
 def maintenance_list(request):
     schedules = MaintenanceSchedule.objects.all().order_by('scheduled_date')
     return render(request, 'maintenance_list.html', {'schedules': schedules})
 
 @login_required
-def add_maintenance(request, tool_id):
+def maintain(request, tool_id):
     tool = get_object_or_404(FarmTool, id=tool_id)
     
     if request.method == 'POST':
@@ -121,16 +121,15 @@ def add_maintenance(request, tool_id):
         MaintenanceSchedule.objects.create(tool=tool, scheduled_date=scheduled_date, notes=notes)
         return redirect('maintenance_list')
     
-    return render(request, 'add_maintenance.html', {'tool': tool})
+    return render(request, 'maintain.html', {'tool': tool})
 
-@login_required
+
 def mark_completed(request, maintenance_id):
     maintenance = get_object_or_404(MaintenanceSchedule, id=maintenance_id)
     maintenance.status = 'Completed'
     maintenance.save()
     return redirect('maintenance_list')
 
-@login_required
 def reminders(request):
     today = timezone.now().date()
     upcoming = MaintenanceSchedule.objects.filter(scheduled_date__gte=today).order_by('scheduled_date')

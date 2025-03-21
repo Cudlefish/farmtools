@@ -5,7 +5,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    background-color: #3d8c21;
     margin: 0;
     padding: 20px;
     text-align: center;
@@ -87,7 +87,7 @@ button:hover {
                 {% if tool.available %}
                     <a href="{% url 'check_out_tool' tool.id %}">Check Out</a>
                 {% else %}
-                
+                    
                         {% csrf_token %}
                         <button type="submit">Check In</button>
                     </form>
