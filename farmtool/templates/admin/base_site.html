@@ -1,0 +1,29 @@
+
+{% extends "admin/base.html" %}
+
+<html>
+    <style>
+        
+body {
+    background-color: #f0f4f8;
+}
+
+.module h2 {
+    color: #3498db;
+}
+
+#header {
+    background-color: #2c3e50;
+}
+
+#branding h1 {
+    color: white;
+}
+
+    </style>
+{% block title %}Farm Tool Admin{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Farm Tool Admin</a></h1>
+{% endblock %}
+</html>

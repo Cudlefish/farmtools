@@ -1,14 +1,362 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Upcoming Maintenance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upcoming maintenance schedule for farm tools">
+    <title>Upcoming Maintenance - Farm Tools Management System</title>
+    <style>
+        :root {
+            --primary-color: #28a745;
+            --primary-light: #e8f5e9;
+            --primary-dark: #1e7e34;
+            --accent-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+            --background-color: #f8f9fa;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .maintenance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .maintenance-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .maintenance-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            padding: 15px;
+            background-color: var(--primary-light);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            width: 120px;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .days-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        
+        .urgent {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .warning {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        .normal {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .card-footer {
+            padding: 12px 15px;
+            background-color: #f5f5f5;
+            text-align: right;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .no-maintenance {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .no-maintenance h3 {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .section-filters {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        select, input[type="date"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .maintenance-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .action-buttons {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Upcoming Maintenance</h2>
-    <ul>
-        {% for schedule in upcoming %}
-            <li>{{ schedule.tool.name }} - {{ schedule.scheduled_date }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">Upcoming Maintenance</h1>
+            <div class="action-buttons">
+                <a href="{}" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Schedule New
+                </a>
+                <a href="" class="btn btn-outline">View History</a>
+            </div>
+        </header>
+        
+        <section class="section-filters">
+            <div class="filter-item">
+                <label class="filter-label" for="filter-tool">Filter by Tool:</label>
+                <select id="filter-tool">
+                    <option value="">All Tools</option>
+                    {% for tool in tools %}
+                    <option value="{{ tool.id }}">{{ tool.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-item">
+                <label class="filter-label" for="filter-date">Date Range:</label>
+                <input type="date" id="filter-date" value="">
+            </div>
+            
+            <div class="filter-item" style="flex: 0 0 auto;">
+                <button class="btn" id="apply-filters">Apply Filters</button>
+            </div>
+        </section>
+        
+        {% if upcoming %}
+        <div class="maintenance-cards">
+            {% for schedule in upcoming %}
+            <div class="maintenance-card" data-tool-id="{{ schedule.tool.id }}">
+                <div class="card-header">
+                    <div class="tool-name">{{ schedule.tool.name }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <div class="info-label">Scheduled Date:</div>
+                        <div class="info-value">
+                            {{ schedule.scheduled_date|date:"F j, Y" }}
+                            {% with days_remaining=schedule.scheduled_date|timeuntil|default:"0 days" %}
+                                {% if "days" in days_remaining %}
+                                    {% if days_remaining|slice:":2"|add:0 <= 3 %}
+                                    <span class="days-indicator urgent">{{ days_remaining }}</span>
+                                    {% elif days_remaining|slice:":2"|add:0 <= 7 %}
+                                    <span class="days-indicator warning">{{ days_remaining }}</span>
+                                    {% else %}
+                                    <span class="days-indicator normal">{{ days_remaining }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="days-indicator urgent">Today</span>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    
+                    {% if schedule.maintenance_type %}
+                    <div class="info-row">
+                        <div class="info-label">Type:</div>
+                        <div class="info-value">{{ schedule.maintenance_type }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if schedule.technician %}
+                    <div class="info-row">
+                        <div class="info-label">Technician:</div>
+                        <div class="info-value">{{ schedule.technician }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if schedule.notes %}
+                    <div class="info-row">
+                        <div class="info-label">Notes:</div>
+                        <div class="info-value">{{ schedule.notes|truncatechars:100 }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{}" class="btn btn-outline">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-maintenance">
+            <h3>No upcoming maintenance scheduled</h3>
+            <p>You can schedule new maintenance tasks using the button above.</p>
+            <a href="{}" class="btn" style="margin-top: 15px;">Schedule Maintenance</a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTool = document.getElementById('filter-tool');
+            const filterDate = document.getElementById('filter-date');
+            const applyFilters = document.getElementById('apply-filters');
+            const cards = document.querySelectorAll('.maintenance-card');
+            
+            applyFilters.addEventListener('click', function() {
+                const selectedTool = filterTool.value;
+                const selectedDate = filterDate.value;
+                
+                // Simple client-side filtering
+                // In a real app, you might want to submit a form or use AJAX instead
+                cards.forEach(card => {
+                    const toolMatch = !selectedTool || card.dataset.toolId === selectedTool;
+                    // For date, we'd need additional data attributes or server-side filtering
+                    
+                    if (toolMatch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

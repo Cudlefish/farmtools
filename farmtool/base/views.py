@@ -6,6 +6,10 @@ from django.http import HttpResponse
 from .forms import LoginForm
 from .forms import SignupForm
 from .models import FarmTool,ToolTransaction,MaintenanceSchedule
+from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+
 
 
 
@@ -89,7 +93,7 @@ def check_out_tool(request, tool_id):
     else:
         return render(request, 'error.html', {'message': 'Tool is currently not available'})
 
-
+@login_required
 def check_in_tool(request, transaction_id):
     transaction = get_object_or_404(ToolTransaction, id=transaction_id, user=request.user)
 
@@ -134,6 +138,30 @@ def reminders(request):
     today = timezone.now().date()
     upcoming = MaintenanceSchedule.objects.filter(scheduled_date__gte=today).order_by('scheduled_date')
     return render(request, 'reminders.html', {'upcoming': upcoming})
+
+def gallery_view(request):
+    
+    return render(request, 'gallery.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+
+@staff_member_required
+def admin_dashboard(request):
+    total_tools = FarmTool.objects.count()
+    
+    total_users = User.objects.count()
+    scheduled_maintenance = MaintenanceSchedule.objects.filter(status="Pending").count()
+
+    context = {
+        'total_tools': total_tools,
+        
+        'total_users': total_users,
+        'scheduled_maintenance': scheduled_maintenance,
+    }
+
+    return render(request, 'admin_dashboard.html', context)
+
+
+
     
 
 

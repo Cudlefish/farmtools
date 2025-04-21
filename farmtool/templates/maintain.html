@@ -1,20 +1,356 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Schedule Maintenance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Schedule maintenance for farm tools">
+    <title>Schedule Maintenance - Farm Tools Management System</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #2E8B57;
+            --primary-light: #E8F5E9;
+            --accent-color: #FF9800;
+            --accent-hover: #e68900;
+            --secondary-color: #007BFF;
+            --secondary-hover: #0056b3;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+        
+        .tool-name {
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 550px;
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background-color: var(--primary-light);
+            padding: 20px;
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-header h2 {
+            font-size: 22px;
+            margin: 0;
+            color: var(--primary-dark);
+        }
+        
+        .form-content {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .help-text {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .form-footer {
+            background-color: #f9f9f9;
+            padding: 20px 25px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 12px 24px;
+            font-size: 16px;
+            line-height: 1.5;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            color: var(--text-light);
+        }
+        
+        .btn-outline:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .required::after {
+            content: "*";
+            color: #f44336;
+            margin-left: 4px;
+        }
+        
+        .maintenance-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option-card {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 120px;
+        }
+        
+        .option-card:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+        
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+        }
+        
+        .option-card input {
+            display: none;
+        }
+        
+        .option-card label {
+            cursor: pointer;
+            display: block;
+            margin: 0;
+        }
+        
+        footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                max-width: 100%;
+            }
+            
+            .form-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Schedule Maintenance for {{ tool.name }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="scheduled_date">Scheduled Date:</label>
-        <input type="date" name="scheduled_date" required>
-        <br>
-        <label for="notes">Notes:</label>
-        <textarea name="notes" placeholder="Enter maintenance details"></textarea>
-        <br>
-        <button type="submit">Schedule Maintenance</button>
-    </form>
-    <p><a href="{% url 'maintenance_list' %}">Back to Maintenance List</a></p>
+    <div class="main-container">
+        <header class="page-header">
+            <div class="tool-name">{{ tool.name }}</div>
+            <h1>Schedule Maintenance</h1>
+            <p class="page-subtitle">Plan ahead to keep your equipment in top condition</p>
+        </header>
+        
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Maintenance Information</h2>
+            </div>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-content">
+                    <div class="form-group">
+                        <label for="scheduled_date" class="required">Scheduled Date</label>
+                        <input type="date" id="scheduled_date" name="scheduled_date" class="form-control" required>
+                        <div class="help-text">Select the date when maintenance should be performed</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="maintenance_type">Maintenance Type</label>
+                        <div class="maintenance-options">
+                            <div class="option-card" onclick="selectOption(this, 'routine')">
+                                <input type="radio" name="maintenance_type" id="type_routine" value="routine">
+                                <label for="type_routine">Routine</label>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'repair')">
+                                <input type="radio" name="maintenance_type" id="type_repair" value="repair">
+                                <label for="type_repair">Repair</label>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'inspection')">
+                                <input type="radio" name="maintenance_type" id="type_inspection" value="inspection">
+                                <label for="type_inspection">Inspection</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="technician">Assigned Technician</label>
+                        <input type="text" id="technician" name="technician" class="form-control" placeholder="Enter name of responsible person">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Notes & Instructions</label>
+                        <textarea id="notes" name="notes" class="form-control" placeholder="Enter details about the maintenance task, required tools, or special instructions"></textarea>
+                        <div class="help-text">Include any specific instructions or details that will help with the maintenance</div>
+                    </div>
+                </div>
+                
+                <div class="form-footer">
+                    <a href="{% url 'maintenance_list' %}" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Schedule Maintenance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Set default date to tomorrow
+        document.addEventListener('DOMContentLoaded', function() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            // Format date as YYYY-MM-DD for the input
+            const formattedDate = tomorrow.toISOString().split('T')[0];
+            document.getElementById('scheduled_date').value = formattedDate;
+            
+            // Set default maintenance type
+            selectOption(document.querySelector('.option-card'), 'routine');
+        });
+        
+        function selectOption(element, value) {
+            // Remove selected class from all options
+            document.querySelectorAll('.option-card').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Check the corresponding radio button
+            document.getElementById('type_' + value).checked = true;
+        }
+    </script>
 </body>
 </html>

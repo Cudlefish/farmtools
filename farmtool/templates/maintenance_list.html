@@ -1,106 +1,342 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <style>
-        
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 20px;
-    padding: 20px;
-    text-align: center;
-}
-
-h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-
-table {
-    width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background: #fff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Table headers */
-th {
-    background: #007BFF;
-    color: white;
-}
-
-/* Alternating row colors */
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-
-tr:hover {
-    background-color: #ddd;
-}
-
-
-a {
-    text-decoration: none;
-    color: #28a745;
-    font-weight: bold;
-}
-
-a:hover {
-    color: #218838;
-}
-
-p a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 8px 15px;
-    background: #007BFF;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-p a:hover {
-    background: #0056b3;
-}
-
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance Schedule</title>
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #007BFF;
+            --primary-dark: #0056b3;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-gray: #f4f4f4;
+            --border-color: #ddd;
+            --shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        /* Responsive table */
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 123, 255, 0.05);
+            transition: background-color 0.2s ease;
+        }
+        
+        /* Status badges */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background-color: var(--warning-color);
+            color: #212529;
+        }
+        
+        .status-completed {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-delayed {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        /* Buttons and links */
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .action-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .action-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            table {
+                border: 0;
+                box-shadow: none;
+            }
+            
+            table caption {
+                font-size: 1.3em;
+            }
+            
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+            
+            table tr {
+                border-bottom: 3px solid var(--border-color);
+                display: block;
+                margin-bottom: 20px;
+                background-color: white;
+                box-shadow: var(--shadow);
+                border-radius: 8px;
+            }
+            
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: 0.9em;
+                text-align: right;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+                position: absolute;
+                left: 15px;
+                color: #555;
+            }
+            
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .empty-state p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Maintenance Schedule</h2>
-    <table border="1">
-        <tr>
-            <th>Tool</th>
-            <th>Scheduled Date</th>
-            <th>Status</th>
-            <th>Notes</th>
-            <th>Actions</th>
-        </tr>
-        {% for schedule in schedules %}
-        <tr>
-            <td>{{ schedule.tool.name }}</td>
-            <td>{{ schedule.scheduled_date }}</td>
-            <td>{{ schedule.status }}</td>
-            <td>{{ schedule.notes }}</td>
-            <td>
-                {% if schedule.status == "Pending" %}
-                <a href="{% url 'mark_completed' schedule.id %}">Mark as Completed</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p><a href="{% url 'tool_list' %}">Back to Tools</a></p>
+    <div class="container fade-in">
+        <header>
+            <h2>Maintenance Schedule</h2>
+        </header>
+        
+        <div class="table-container">
+            <table role="grid" aria-label="Maintenance Schedule">
+                <thead>
+                    <tr>
+                        <th scope="col">Tool</th>
+                        <th scope="col">Scheduled Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Notes</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if schedules %}
+                        {% for schedule in schedules %}
+                        <tr>
+                            <td data-label="Tool">{{ schedule.tool.name }}</td>
+                            <td data-label="Scheduled Date">{{ schedule.scheduled_date }}</td>
+                            <td data-label="Status">
+                                <span class="status-badge status-{% if schedule.status == 'Pending' %}pending{% elif schedule.status == 'Completed' %}completed{% else %}delayed{% endif %}">
+                                    {{ schedule.status }}
+                                </span>
+                            </td>
+                            <td data-label="Notes">{{ schedule.notes|default:"No notes" }}</td>
+                            <td data-label="Actions">
+                                {% if schedule.status == "Pending" %}
+                                <form method="post" action="{}" class="inline-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" aria-label="Mark {{ schedule.tool.name }} maintenance as completed">
+                                        Mark as Completed
+                                    </button>
+                                </form>
+                                {% elif schedule.status == "Completed" %}
+                                <span class="muted">Completed on {{ schedule.completion_date }}</span>
+                                {% else %}
+                                <a href="{}" class="action-link" aria-label="Reschedule {{ schedule.tool.name }} maintenance">
+                                    Reschedule
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <p>No maintenance schedules found.</p>
+                                    <a href="{}" class="btn btn-primary">Create New Schedule</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="actions">
+            <a href="{% url 'tool_list' %}" class="btn btn-primary back-link">Back to Tools</a>
+            
+            <a href="{% url 'maintain' tool_id %}" class="btn btn-primary">Add New Schedule</a>
+            
+        </div>
+    </div>
+
+    <script>
+        // Add fade-in effect to new items
+        document.addEventListener('DOMContentLoaded', function() {
+            // Flash success message if present in URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const successMessage = urlParams.get('success');
+            
+            if (successMessage) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'alert-success fade-in';
+                messageDiv.textContent = decodeURIComponent(successMessage);
+                
+                document.querySelector('.container').prepend(messageDiv);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => messageDiv.remove(), 500);
+                }, 5000);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -3,163 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Farm Tools & Equipment Management System</title>
     <style>
-        body {
-            background-image: url();
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #4a8c39;
+            --secondary-color: #f7cd0d;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --background-light: #f4f4f9;
+            --background-dark: #2e5923;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            box-sizing: border-box;
         }
-        header {
-            background-color:#ff9800;
-            color: black;
-            padding: 10px 20px;
-            text-align: center;
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
         }
+        
         .container {
             width: 90%;
             max-width: 1200px;
-            margin: 0 auto;}
+            margin: 0 auto;
+            padding: 0 15px;
+        }
         
-       .navbar {
-          background-color: #f7cd0d;
-          color: black;
-          padding: 30px 0;
+        /* Header and Navigation */
+        header {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
-       .navbar .logo {
-          font-size: 1.5rem;
-          margin: 0;
-          float: left;
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
-
-        .navbar nav {
-          float: right;
+        
+        .logo {
+            color: var(--text-light);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
         }
+        
         .nav-links {
-          list-style: none;
-          margin: 0;
-          padding: 0;
+            display: flex;
+            list-style: none;
         }
-       .nav-links li {
-          display: inline-block;
-          margin-left: 20px;
+        
+        .nav-links li {
+            margin-left: 25px;
         }
-
+        
         .nav-links a {
-           color: black;
-           text-decoration: none;
-           font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
         }
-        section {
-            padding: 30px;
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
             text-align: center;
         }
         
-        .features {
-            padding: 50px 0;
-            text-align: center;
-            background-color: #45a049;
-        }
-
-
-        .features h2 {
-            font-size: 2rem;
+        .hero h1 {
+            font-size: 3rem;
             margin-bottom: 20px;
+            color: var(--text-dark);
         }
-
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: var(--background-light);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+        
         .feature-list {
             display: flex;
-            justify-content: space-around;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
         }
-
-
+        
         .feature {
-            max-width: 300px;
+            flex: 1;
+            min-width: 300px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
         }
-
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
         .feature h3 {
             font-size: 1.5rem;
-            color: black;
-        
+            margin-bottom: 15px;
+            color: var(--primary-color);
         }
-        .btn {
-            background-color: #3d8c21;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+            background-color: var(--background-light);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        
+        .contact p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-size: 1rem;
         }
-
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
         .btn:hover {
-            background-color: #45a049;
+            background-color: var(--background-dark);
         }
-
-        .contact {
-            background-image: url(f1.jpeg);
-            
-        }
-
+        
+        /* Footer */
         footer {
-            background-color: #3d8c21;
-            color: white;
-            padding: 10px;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            padding: 30px 0;
             text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .feature-list {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-        <header class="navbar">
-            <div class="container">
-                <h1 class="logo">FarmTools & Equipment</h1><br>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <a href="#" class="logo">FarmTools & Equipment</a>
                 <nav>
                     <ul class="nav-links">
-                        <li><a href="homepage1">Home</a></li>
-                        <li><a href="profile">Profile</a></li>
-                        <li><a href="tool_list">Tools & Equipment</a></li>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li><br><br>
-                        
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="tool_list">Tools & Equipment</a></li>
+                        <li><a href="profile">Profile</a></li>
                     </ul>
                 </nav>
             </div>
+        </div>
     </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Manage Your Farm Equipment Efficiently</h1>
+            <p>Track, maintain, and optimize your farm tools and equipment with our comprehensive management system designed specifically for modern agriculture.</p>
+            <a href="#features" class="btn">Explore Features</a>
+        </div>
+    </section>
+
     <section id="features" class="features">
         <div class="container">
-            <h2>Features</h2>
+            <h2 class="section-title">Features</h2>
             <div class="feature-list">
                 <div class="feature">
+                    <div class="feature-icon">📊</div>
                     <h3>Inventory Tracking</h3>
-                    <p>Keep track of all your farm tools and equipment in one place.</p>
+                    <p>Keep track of all your farm tools and equipment in one place. Monitor quantities, conditions, and locations to ensure optimal resource management.</p>
                 </div>
                 <div class="feature">
+                    <div class="feature-icon">🔧</div>
                     <h3>Maintenance Scheduling</h3>
-                    <p>Automate maintenance reminders to prevent unexpected breakdowns.</p>
+                    <p>Automate maintenance reminders to prevent unexpected breakdowns. Schedule regular servicing and receive notifications when maintenance is due.</p>
                 </div>
                 <div class="feature">
+                    <div class="feature-icon">📝</div>
                     <h3>Tool Check-In/Check-Out</h3>
-                    <p>Log tool usage with ease and enhance accountability among workers.</p>
+                    <p>Log tool usage with ease and enhance accountability among workers. Track who has which equipment and when it's expected to be returned.</p>
                 </div>
             </div>
         </div>
     </section>
-    <br><br><br><br><br><br>
-    <section id="contact" class="contact">
+
+    <section id="about" class="about">
         <div class="container">
-            <h2>Contact Us</h2>
-            <p>Have questions? Reach out to us for more information.</p>
-            <a href="mailto:support@farmtools.com" class="btn">Email Us</a>
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Farm Tools and Equipment Management System was created by farmers for farmers. We understand the challenges of modern agriculture and have developed a comprehensive solution to help you manage your valuable equipment efficiently.</p>
+                    <p>Our mission is to empower farmers with the technology and tools they need to increase productivity, reduce downtime, and maximize the lifespan of their equipment. Whether you're a small family farm or a large agricultural operation, our system is designed to scale to your needs.</p>
+                    <p>With years of experience in both agriculture and software development, our team combines practical farming knowledge with technological expertise to deliver solutions that make a real difference in your daily operations.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/images/tractor.jpg" alt="Farm field with equipment">
+                    
+
+                </div>
+            </div>
         </div>
     </section>
-    <br><br><br><br>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="/images/plant.jpg" alt="Walking Tractor">
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tol.jpg" alt="Harvester">
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/rake.jpeg" alt="Farm Tools">
+
+                </div>
+                <div class="gallery-item">
+                    <img src="images/plough.jpeg" alt="Irrigation System">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p>Have questions about our farm tools management system? Reach out to us for more information or to schedule a demonstration.</p>
+            
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <p>Or email us directly at:</p>
+                <a href="mailto:support@farmtools.com" class="btn">support@farmtools.com</a>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">User Guide</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li>Email: support@farmtools.com</li>
+                        <li>Phone: (254)71641-3123</li>
+                        <li>Address: 123 Farm Way, Nairobi</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

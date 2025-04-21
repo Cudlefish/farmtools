@@ -1,103 +1,340 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Tools & Equipment | Inventory Management</title>
     <style>
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #3d8c21;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-    color: #fff;
-}
-
-h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0 auto;
-    max-width: 500px;
-}
-
-li {
-    background: rgba(255, 255, 255, 0.9);
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #333;
-    font-size: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-li:hover {
-    transform: scale(1.05);
-}
-
-a, button {
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-a {
-    background: #007bff;
-    color: white;
-    border: none;
-}
-
-a:hover {
-    background: #0056b3;
-}
-
-button {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    outline: none;
-}
-
-button:hover {
-    background: #cc0000;
-}
-
+        :root {
+            --primary-color: #3d8c21;
+            --primary-dark: #2e6618;
+            --primary-light: #4caf50;
+            --secondary-color: #f7cd0d;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --danger: #e74c3c;
+            --danger-dark: #c0392b;
+            --success: #27ae60;
+            --success-dark: #219653;
+            --warning: #f39c12;
+            --info: #007bff;
+            --info-dark: #0056b3;
+            --background: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .tools-container {
+            background-color: var(--text-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tools-count {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        
+        .tools-list {
+            list-style-type: none;
+        }
+        
+        .tool-item {
+            background: var(--text-light);
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease-in-out;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            flex: 1;
+        }
+        
+        .tool-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .tool-status {
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+            width: fit-content;
+        }
+        
+        .status-available {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-dark);
+        }
+        
+        .status-checked-out {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--warning);
+        }
+        
+        .btn {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+        }
+        
+        .btn-checkout {
+            background: var(--info);
+            color: white;
+        }
+        
+        .btn-checkout:hover {
+            background: var(--info-dark);
+        }
+        
+        .btn-checkin {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-checkin:hover {
+            background: var(--success-dark);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tool-details {
+            color: #555;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+        }
+        
+        .empty-state p {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .tool-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .tool-actions {
+                margin-top: 1rem;
+                align-self: flex-end;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
-    <title>Farm Tools</title>
 </head>
 <body>
-    <h2>Tools & Equipment</h2>
-    <ul>
-        {% for tool in tools %}
-            <li>
-                {{ tool.name }} - {% if tool.available %} Available {% else %} Checked Out {% endif %}  
-                {% if tool.available %}
-                    <a href="{% url 'check_out_tool' tool.id %}">Check Out</a>
-                {% else %}
-                    
-                        {% csrf_token %}
-                        <button type="submit">Check In</button>
-                    </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    <br><br><br><br>
+    <header>
+        <h1>Farm Tools & Equipment Inventory</h1>
+        <p>Manage and track your agricultural tools efficiently</p>
+    </header>
+    
+    <main>
+        <div class="tools-container">
+            <div class="section-title">
+                <span>Available Equipment</span>
+                <span class="tools-count">{{ tools|length }} items</span>
+            </div>
+            
+            <ul class="tools-list">
+                {% for tool in tools %}
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <span class="tool-name">{{ tool.name }}</span>
+                            <span class="tool-details">ID: #{{ tool.id }} | Category: {{ tool.category }}</span>
+                            {% if tool.available %}
+                                <span class="tool-status status-available">Available</span>
+                            {% else %}
+                                <span class="tool-status status-checked-out">Checked Out</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="tool-actions">
+                            {% if tool.available %}
+                                <a href="{% url 'check_out_tool' tool.id %}" class="btn btn-checkout">Check Out</a>
+                            {% else %}
+                                <form action="{% url 'check_in_tool' tool.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-checkin">Check In</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% empty %}
+                    <div class="empty-state">
+                        <p>No tools or equipment are currently available in the system.</p>
+                        <a href="{% url 'add_tool' %}" class="btn btn-checkout">Add New Tool</a>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+    
     <footer>
-        <p>&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="">About</a>
+                <a href="">Contact</a>
+                <a href="">Help</a>
+            </div>
+            <p class="copyright">&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>

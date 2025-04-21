@@ -1,17 +1,237 @@
 <!DOCTYPE html>
-<html>
-    <style>
-        
-    </style>
+<html lang="en">
 <head>
-    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User profile page for Farm Tools Management System">
+    <title>My Profile - Farm Tools Management System</title>
+    <style>
+        :root {
+            --primary-color: #28a745;
+            --primary-hover: #218838;
+            --accent-color: #f8f9fa;
+            --text-color: #333;
+            --secondary-text: #6c757d;
+            --border-color: #dee2e6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .profile-info {
+            padding: 20px;
+        }
+        
+        .profile-avatar {
+            width: 100%;
+            background-color: var(--accent-color);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto;
+        }
+        
+        .info-group {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin: 20px 0 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .profile-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            footer{
+                background-color: #218838;
+            }
+    }
+    </style>
 </head>
 <body>
-    <h2>Welcome, {{ user.username }}</h2>
-    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
-    <p>Email: {{ user.email }}</p>
-    
-
+    <div class="container">
+        <header class="profile-header">
+            <h1 class="profile-title">My Profile</h1>
+            <div class="profile-actions">
+                <a href="{}" class="btn">Edit Profile</a>
+                <a href="{}" class="btn btn-outline">Change Password</a>
+            </div>
+        </header>
+        
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <div class="avatar">
+                    {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+                </div>
+            </div>
+            
+            <div class="profile-info">
+                <h2>Welcome, {{ user.username }}</h2>
+                
+                <div class="section-title">Personal Information</div>
+                <div class="two-column">
+                    <div class="info-group">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value">{{ user.first_name }} {{ user.last_name }}</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">Username</div>
+                        <div class="info-value">{{ user.username }}</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">Contact Information</div>
+                <div class="info-group">
+                    <div class="info-label">Email Address</div>
+                    <div class="info-value">{{ user.email }}</div>
+                </div>
+                
+                {% if user.profile.phone_number %}
+                <div class="info-group">
+                    <div class="info-label">Phone Number</div>
+                    <div class="info-value">{{ user.profile.phone_number }}</div>
+                </div>
+                {% endif %}
+                
+                <div class="section-title">Account Information</div>
+                <div class="two-column">
+                    <div class="info-group">
+                        <div class="info-label">Account Status</div>
+                        <div class="info-value">Active</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">Member Since</div>
+                        <div class="info-value">{{ user.date_joined|date:"F j, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="">About</a>
+                <a href="">Contact</a>
+                <a href="">Help</a>
+            </div>
+            <p class="copyright">&copy; 2025 Farm Tools Management System. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
-
 </html>

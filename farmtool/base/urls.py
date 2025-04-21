@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('',views.home, name="home"),
@@ -14,14 +16,13 @@ urlpatterns = [
     path('transaction/<int:transaction_id>/checkin/', views.check_in_tool, name='check_in_tool'),
     path('error',views.error, name="error"),
     path('maintenance/', views.maintenance_list, name='maintenance_list'),
-    path('maintain', views.maintain, name="maintain"),
-    
+    path('maintain/<int:tool_id>/', views.maintain, name="maintain"),
     path('maintenance/complete/<int:maintenance_id>/', views.mark_completed, name='mark_completed'),
-    path('reminders', views.reminders, name='reminders')
+    path('reminders', views.reminders, name='reminders'),
+    path('gallery_view', views.gallery_view, name='gallery_view'),
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    
 
     
-    
 
-    
-    
-]
+] + static( settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

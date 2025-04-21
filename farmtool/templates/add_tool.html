@@ -1,72 +1,322 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add a new farm tool to the management system">
+    <title>Add Farm Tool - Farm Tools Management System</title>
     <style>
+        :root {
+            --primary-color: #28a745;
+            --primary-hover: #218838;
+            --primary-light: #e8f5e9;
+            --text-color: #333;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --background-color: #f8f9fa;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+        }
         
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4CAF50, #2E8B57);
-    color: white;
-    text-align: center;
-    padding: 50px;
-}
-form {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 50%;
-    margin: auto;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-transform: uppercase;
-    color: #333;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px 0px;
-    margin: 10px;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-    font-size: 16px;
-    
-}
-
-textarea {
-    height: 80px;
-    resize: none;
-}
-
-
-button {
-    background: #ff9800;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-button:hover {
-    background: #e68900;
-}
-
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background-color: var(--primary-light);
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .form-content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .required::after {
+            content: "*";
+            color: var(--error-color);
+            margin-left: 4px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .input-addon {
+            position: relative;
+        }
+        
+        .input-addon select {
+            padding-right: 40px;
+        }
+        
+        .input-addon::after {
+            content: "↓";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-secondary);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .invalid-feedback {
+            display: none;
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        .form-control.is-invalid {
+            border-color: var(--error-color);
+        }
+        
+        .form-control.is-invalid + .invalid-feedback {
+            display: block;
+        }
+        
+        .form-control.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .form-check-input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        @media (max-width: 576px) {
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
     </style>
-    <title>Add Farm Tool</title>
 </head>
 <body>
-    <h2>Add a New Farm Tool</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Tool Name" required>
-        <textarea name="description" placeholder="Description" required></textarea>
-        <button type="submit">Add Tool</button>
-    </form>
+    <div class="container">
+        <div class="form-header">
+            <h1 class="form-title">Add a New Farm Tool</h1>
+            <p class="form-subtitle">Enter the details of the new tool to add it to your inventory</p>
+        </div>
+        
+        <div class="form-content">
+            <form method="post" id="addToolForm" novalidate>
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="toolName" class="required">Tool Name</label>
+                    <input type="text" id="toolName" name="name" class="form-control" required>
+                    <div class="invalid-feedback">Please enter a tool name</div>
+                    <small class="help-text">Enter a unique name to identify this tool</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="toolDescription" class="required">Description</label>
+                    <textarea id="toolDescription" name="description" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please enter a description</div>
+                    <small class="help-text">Include details about the tool's purpose, features, and any special instructions</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="toolCategory">Category</label>
+                    <div class="input-addon">
+                        <select id="toolCategory" name="category" class="form-control">
+                            <option value="">Select a category</option>
+                            <option value="hand_tools">Hand Tools</option>
+                            <option value="power_tools">Power Tools</option>
+                            <option value="irrigation">Irrigation Equipment</option>
+                            <option value="planting">Planting Equipment</option>
+                            <option value="harvesting">Harvesting Equipment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <small class="help-text">Select the category that best describes this tool</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="toolModel">Model/Serial Number</label>
+                    <input type="text" id="toolModel" name="model" class="form-control">
+                    <small class="help-text">If applicable, enter the model or serial number</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purchaseDate">Purchase Date</label>
+                    <input type="date" id="purchaseDate" name="purchase_date" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Maintenance Requirements</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="requiresMaintenance" name="requires_maintenance" class="form-check-input">
+                        <label for="requiresMaintenance">This tool requires regular maintenance</label>
+                    </div>
+                    <div id="maintenanceFields" style="display: none; margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--primary-light);">
+                        <div class="form-group">
+                            <label for="maintenanceFrequency">Maintenance Frequency (Days)</label>
+                            <input type="number" id="maintenanceFrequency" name="maintenance_frequency" class="form-control" min="1">
+                            <small class="help-text">How often this tool needs maintenance</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="{% url 'tool_list' %}" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn">Add Tool</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form validation
+            const form = document.getElementById('addToolForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+                
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+            
+            // Show/hide maintenance fields based on checkbox
+            const requiresMaintenance = document.getElementById('requiresMaintenance');
+            const maintenanceFields = document.getElementById('maintenanceFields');
+            
+            requiresMaintenance.addEventListener('change', function() {
+                maintenanceFields.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Validate fields on input
+            requiredFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    if (field.value.trim()) {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
